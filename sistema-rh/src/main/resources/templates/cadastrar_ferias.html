@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Férias - Sistema RH</title>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fffff0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #000435 0%, #001a6e 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 4, 53, 0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0, 4, 53, 0.1);
+        }
+        
+        .action-bar {
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 10px rgba(0, 4, 53, 0.15);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #000435 0%, #0066cc 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 4, 53, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(108, 117, 125, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #000435;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        label i {
+            color: #0066cc;
+        }
+        
+        select,
+        input[type="date"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background-color: white;
+        }
+        
+        select:focus,
+        input[type="date"]:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+        
+        select:hover,
+        input[type="date"]:hover {
+            border-color: #0066cc;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+        }
+        
+        .form-actions .btn {
+            flex: 1;
+            justify-content: center;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #e7f3ff 0%, #d0e8ff 100%);
+            border-left: 4px solid #0066cc;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 10px;
+        }
+        
+        .info-box p {
+            color: #000435;
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-box i {
+            color: #0066cc;
+        }
+        
+        .footer {
+            background-color: #000435;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+        
+        .footer p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.6rem;
+                flex-direction: column;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>
+            <i class="bi bi-airplane-engines-fill"></i>
+            Solicitar Férias
+        </h1>
+        <p>Preencha os dados para solicitar férias</p>
+    </div>
+    
+    <div class="container">
+        <div class="action-bar">
+            <a th:href="@{/ferias}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i>
+                Voltar à Lista
+            </a>
+        </div>
+        
+        <div class="card">
+            <form th:action="@{/ferias/cadastrar}" method="post">
+                <div class="form-group">
+                    <label for="funcionarioId">
+                        <i class="bi bi-person"></i>
+                        Funcionário
+                    </label>
+                    <select name="funcionarioId" id="funcionarioId" required>
+                        <option value="">Selecione um funcionário...</option>
+                        <option th:each="f : ${funcionarios}" 
+                                th:value="${f.id}" 
+                                th:text="${f.nome}"></option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dataInicio">
+                        <i class="bi bi-calendar-check"></i>
+                        Data de Início
+                    </label>
+                    <input 
+                        type="date" 
+                        name="dataInicio" 
+                        id="dataInicio" 
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="dataFim">
+                        <i class="bi bi-calendar-x"></i>
+                        Data de Fim
+                    </label>
+                    <input 
+                        type="date" 
+                        name="dataFim" 
+                        id="dataFim" 
+                        required
+                    >
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-check-circle"></i>
+                        Solicitar Férias
+                    </button>
+                    <a th:href="@{/ferias}" class="btn btn-secondary">
+                        <i class="bi bi-x-circle"></i>
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+            
+            <div class="info-box">
+                <p><i class="bi bi-info-circle"></i> <strong>Informações:</strong></p>
+                <p><i class="bi bi-dot"></i> O status da solicitação será definido como "Pendente"</p>
+                <p><i class="bi bi-dot"></i> Certifique-se de que as datas estão corretas antes de enviar</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2026 Sistema RH - Todos os direitos reservados</p>
+    </div>
+</body>
+</html>

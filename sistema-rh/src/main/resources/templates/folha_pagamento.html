@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folha de Pagamento - Sistema RH</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background-color:#fffff0;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+}
+
+.header{
+background:linear-gradient(135deg,#000435 0%,#001a6e 100%);
+color:white;
+padding:30px 20px;
+text-align:center;
+box-shadow:0 4px 12px rgba(0,4,53,0.3);
+}
+
+.header h1{
+font-size:2.2rem;
+margin-bottom:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:15px;
+}
+
+.header p{
+font-size:1.1rem;
+opacity:0.9;
+}
+
+.container{
+max-width:1200px;
+margin:40px auto;
+padding:0 20px;
+flex:1;
+}
+
+.action-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.btn{
+display:inline-flex;
+align-items:center;
+gap:10px;
+padding:14px 28px;
+font-size:16px;
+font-weight:600;
+text-decoration:none;
+border-radius:10px;
+transition:all 0.3s ease;
+cursor:pointer;
+border:none;
+box-shadow:0 4px 10px rgba(0,4,53,0.15);
+}
+
+.btn-primary{
+background:linear-gradient(135deg,#000435 0%,#0066cc 100%);
+color:white;
+}
+
+.btn-secondary{
+background:linear-gradient(135deg,#6c757d 0%,#495057 100%);
+color:white;
+}
+
+.btn:hover{
+transform:translateY(-3px);
+}
+
+.card{
+background:white;
+border-radius:15px;
+padding:30px;
+box-shadow:0 5px 20px rgba(0,4,53,0.1);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+thead{
+background:linear-gradient(135deg,#000435 0%,#001a6e 100%);
+color:white;
+}
+
+th{
+padding:18px 15px;
+text-align:left;
+font-weight:600;
+font-size:0.9rem;
+}
+
+td{
+padding:15px;
+border-bottom:1px solid #e0e0e0;
+}
+
+tbody tr:hover{
+background:#f8f9fa;
+}
+
+.valor-positivo{
+color:#28a745;
+font-weight:600;
+}
+
+.valor-negativo{
+color:#dc3545;
+font-weight:600;
+}
+
+.empty-message{
+text-align:center;
+padding:40px;
+color:#666;
+}
+
+.footer{
+background:#000435;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:auto;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>
+<i class="bi bi-cash-coin"></i>
+Folha de Pagamento
+</h1>
+<p>Gerencie os pagamentos dos colaboradores</p>
+</div>
+
+<div class="container">
+
+<div class="action-bar">
+
+<a th:href="@{/menu}" class="btn btn-secondary">
+<i class="bi bi-arrow-left-circle"></i>
+Voltar ao Menu
+</a>
+
+<a th:href="@{/folhapagamento/cadastrar}" class="btn btn-primary">
+<i class="bi bi-receipt"></i>
+Registrar Pagamento
+</a>
+
+</div>
+
+<div class="card">
+
+<table>
+
+<thead>
+<tr>
+<th>ID Pagamento</th>
+<th>ID Func</th>
+<th>Funcionário</th>
+<th>Salário Bruto</th>
+<th>Comissão</th>
+<th>Imposto</th>
+<th>Salário Líquido</th>
+<th>Data Pagamento</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr th:if="${#lists.isEmpty(pagamentos)}">
+<td colspan="8" class="empty-message">
+Nenhum pagamento registrado.
+</td>
+</tr>
+
+<tr th:each="p : ${pagamentos}" th:unless="${#lists.isEmpty(pagamentos)}">
+
+<td th:text="${p.id}"></td>
+
+<td th:text="${p.funcionario != null ? p.funcionario.id : 'N/A'}"></td>
+
+<td th:text="${p.funcionario != null ? p.funcionario.nome : 'N/A'}"></td>
+
+<td th:text="'MTN ' + ${#numbers.formatDecimal(p.salarioBruto,1,'COMMA',2,'POINT')}"></td>
+
+<td class="valor-positivo"
+th:text="'MTN ' + ${#numbers.formatDecimal(p.comissao,1,'COMMA',2,'POINT')}"></td>
+
+<td class="valor-negativo"
+th:text="'MTN ' + ${#numbers.formatDecimal(p.imposto,1,'COMMA',2,'POINT')}"></td>
+
+<td class="valor-positivo"
+th:text="'MTN ' + ${#numbers.formatDecimal(p.salarioLiquido,1,'COMMA',2,'POINT')}"></td>
+
+<td th:text="${p.dataPagamento}"></td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<div class="footer">
+<p>&copy; 2026 Sistema RH</p>
+</div>
+
+</body>
+</html>
