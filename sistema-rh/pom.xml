@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.3</version>
+		<version>3.3.5</version>
 		<relativePath/>
 	</parent>
 
@@ -24,7 +24,7 @@
 
 	<dependencies>
 
-		<!-- WEB (API + Controllers) -->
+		<!-- WEB -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -42,33 +42,25 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<!-- MYSQL (para desenvolvimento local) -->
+		<!-- MYSQL (LOCAL) -->
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- POSTGRESQL (para Render / Railway / Cloud) -->
+		<!-- POSTGRESQL (NUVEM) -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- SWAGGER / OPENAPI -->
+		<!-- SWAGGER -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.5.0</version>
-		</dependency>
-
-		<!-- DEVTOOLS -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
 		</dependency>
 
 		<!-- LOMBOK -->
@@ -78,7 +70,7 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- TESTES -->
+		<!-- TEST -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -89,20 +81,6 @@
 
 	<build>
 		<plugins>
-
-			<!-- COMPILER -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
 
 			<!-- SPRING BOOT -->
 			<plugin>
